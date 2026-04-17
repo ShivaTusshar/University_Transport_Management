@@ -1,42 +1,57 @@
-# Campus Transportation Management System
+# IIT Guwahati Transport Management System
 
-A web-based portal designed to streamline transit tracking for university campuses. This system provides real-time tracking, route planning, and schedule management for both city buses and inner-campus utility vehicles (caddies). 
+A comprehensive, web-based portal designed to streamline and manage transportation logistics across the IIT Guwahati campus. This system connects students, vehicle drivers, and administrators to provide real-time updates and efficient routing for campus Cadys, college buses, and local city buses.
 
-## 🚀 Features
-* **Dual-Tier Transit Tracking:** Separate modules for heavy-duty city buses and internal campus caddies.
-* **Driver Portal:** Authenticated access for drivers to update their live location, next destination, and current status (Waiting/Started).
-* **Passenger Dashboard:**
-  * **Bus Routing:** Check ETAs and statuses for buses moving between the Institute, Bhawarkua, and C21 Mall.
-  * **Cady Routing:** Graph-based ETA calculations for campus caddies with custom sorting (Arrive First, Reach Destination First, Most Empty Seats).
-* **Admin Controls:** Add new bus schedules directly to the database.
+## 🚀 Key Features
 
-## 🛠 Tech Stack
-* **Frontend:** HTML, CSS 
-* **Backend:** PHP (Session management, routing logic)
-* **Database:** MySQL (Relational schema for drivers, vehicles, locations, and schedules)
+* **Multi-Tier User Roles:** Distinct dashboards and access levels for Students, Cady Drivers, College Bus Drivers, and Transport Managers.
+* **Smart Cady Routing:** An advanced sorting algorithm that allows users to find campus vehicles based on "Arrive Here First", "Reach Destination First", or "Most Empty Seats".
+* **Real-Time Fleet Tracking:** Drivers can update their current location, next destination, and available seat counts, which instantly reflects on the student dashboard.
+* **Timetable Management:** Administrative controls to easily Create, Read, Update, and Delete (CRUD) schedules for local city buses.
+* **Emergency Services Directory:** Quick access to vital university services (Ambulance, Fire Station, Shifting) with direct driver contact details.
+* **Secure Authentication:** User passwords are encrypted using PHP's native BCRYPT hashing algorithms.
 
-## ⚙️ Installation & Setup
-1. Install a local server environment like **XAMPP** or **WAMP**.
-2. Clone this repository into your server's root directory (e.g., `htdocs` for XAMPP).
-3. Start the **Apache** and **MySQL** modules from your control panel.
-4. Open phpMyAdmin (`http://localhost/phpmyadmin`) and create a new database named `test`.
-5. Execute the required SQL queries to generate the necessary tables (see Database Schema section).
-6. Access the application via your browser at `http://localhost/your-folder-name/trans.php` (or your designated homepage).
+## 🛠️ Technology Stack
 
-## 🗄️ Database Schema Requirements
-To run this project locally, your `test` database must include the following tables:
-* `citybus` (busno, time, rtime)
-* `bdriver` (bdid, bdpassword)
-* `bmanage` (bdid, bno, mexpectedmovetime, eexpectedmovetime)
-* `binfo` (bno, currentlocation, nextlocation, status)
-* `blocation` (blocname)
-* `bus` (bno)
-* `location` (locname)
-* `cady` (cno)
-* `manages` (cno, routeno, did)
-* `info` (cno, currentloc, seatsavail)
-* `expectedtime` (loc1, loc2, routeno, time)
+* **Frontend:** HTML5, CSS3 
+* **Backend:** PHP 7+ 
+* **Database:** MySQL
+* **Environment:** XAMPP / WAMP Server
 
-## 💡 How It Works
-* **Bus Module:** Uses fixed routes. ETAs are calculated using hardcoded conditionals based on the driver's manually updated status and location.
-* **Cady Module:** Uses dynamic graph traversal. It calculates travel time dynamically by treating campus locations as nodes and routes as edges, using the `expectedtime` table to accumulate total journey times. Results are sorted using a custom PHP implementation based on user preferences.
+## ⚙️ Local Setup & Installation
+
+To run this project locally, follow these steps:
+
+1. **Install a Local Server:** Download and install [XAMPP](https://www.apachefriends.org/index.html).
+2. **Set Up the Directory:** * Navigate to your XAMPP installation folder (usually `C:\xampp\htdocs\`).
+   * Create a new folder named `transport`.
+   * Clone or extract the project files into this `transport` folder.
+3. **Configure the Database:**
+   * Open the XAMPP Control Panel and start **Apache** and **MySQL**.
+   * Open your web browser and go to `http://localhost/phpmyadmin`.
+   * Create a new database named `test`.
+   * Click the **Import** tab, upload the `test.sql` file provided in this repository, and click **Go** to generate the tables and mock data.
+4. **Launch the Application:**
+   * Open your browser and navigate to `http://localhost/transport/login1.php` to access the portal.
+
+## 🔑 Default Testing Credentials
+
+The system utilizes predefined email addresses to authenticate staff roles. You can use the following credentials to test the different interfaces (default passwords for drivers are set to their respective names + birth year formats in the database, but can be bypassed if you check the SQL file directly. For testing the existing hashes, use these):
+
+* **Manager Dashboard:** * Email: `manager1000@gmail.com`
+  * *(Note: You may need to create a test user and update the hash in the DB, or refer to the SQL dump for the exact password format).*
+* **Cady Driver Dashboard:** * Email: `ram1001@gmail.com` (Driver ID: 1001)
+  * Email: `shyam1002@gmail.com` (Driver ID: 1002)
+* **Bus Driver Dashboard:** * Email: `bdriver2001@gmail.com` (Driver ID: 2001)
+
+## 📁 Core Directory Structure
+
+* `/login.php` & `/login1.php` - Central authentication and role-based routing.
+* `/sp.php` & `/regester1.php` - Secure user registration logic.
+* `/trans.php` - Primary student/user dashboard.
+* `/managerhome.php` - Administrative control center.
+* `/cadybackend.php` - Contains the routing and sorting algorithms for campus vehicles.
+* `/test.sql` - The complete database schema and mock data.
+
+---
+*Developed by Tusshar, Computer Science and Engineering, IIT Guwahati.*
